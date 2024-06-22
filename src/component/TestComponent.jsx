@@ -43,8 +43,12 @@ const TestComponent = ({ data }) => {
       <Title level={4} style={{ textAlign: "center", margin: "20px 0" }}>
         풀어봐
       </Title>
-      <Row gutter={16}>
-        <Col span={12}>
+      <Row gutter={[16, 16]}>
+        <Col
+          span={24}
+          lg={{ span: 12, offset: 0 }}
+          style={{ marginBottom: "20px" }}
+        >
           {leftColumn.map((word, index) => (
             <div
               key={word.단어}
@@ -59,7 +63,7 @@ const TestComponent = ({ data }) => {
                 value={answers[index]}
                 onChange={(e) => handleInputChange(index, e.target.value)}
                 style={{
-                  width: "200px",
+                  width: "calc((100% / 2) - (((2 - 1) / 2) * 4rem))", // 동적 너비 설정
                   borderColor: results
                     ? results[index]
                       ? "green"
@@ -70,7 +74,11 @@ const TestComponent = ({ data }) => {
             </div>
           ))}
         </Col>
-        <Col span={12}>
+        <Col
+          span={24}
+          lg={{ span: 12, offset: 0 }}
+          style={{ marginBottom: "20px" }}
+        >
           {rightColumn.map((word, index) => (
             <div
               key={word.단어}
@@ -87,7 +95,7 @@ const TestComponent = ({ data }) => {
                   handleInputChange(index + half, e.target.value)
                 }
                 style={{
-                  width: "200px",
+                  width: "calc((100% / 2) - (((2 - 1) / 2) * 4rem))", // 동적 너비 설정
                   borderColor: results
                     ? results[index + half]
                       ? "green"

@@ -51,17 +51,24 @@ const JapanPage = () => {
 
   return (
     <Content
-      style={{ padding: "0 50px", marginTop: 64, backgroundColor: "white" }}
+      style={{
+        padding: "0 50px",
+        marginTop: 64,
+        backgroundColor: "white",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
     >
-      <div className="site-layout-content">
+      <div className="site-layout-content" style={{ width: "100%" }}>
         <Title level={2} style={{ textAlign: "center", margin: "20px 0" }}>
           일본어 단어 시험
         </Title>
-        <Button type="primary" onClick={handleClick}>
+        <Button type="primary" onClick={handleClick} style={{ marginBottom: "20px" }}>
           일본어 단어 가져오기
         </Button>
         {loading ? (
-          <Spin size="large" style={{ marginLeft: "10px" }} />
+          <Spin size="large" style={{ alignSelf: "center" }} />
         ) : (
           data && <TestComponent data={data} />
         )}
