@@ -2,9 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./page/HomePage";
 import HeaderCompoent from "./layout/Header";
-import JapanPage from "./page/JapanPage";
-import EngPage from "./page/EngPage";
-import TestComponent from "./component/TestComponent";
+import WordsPage from "./page/WordsPage";
 
 const Router = () => {
   return (
@@ -12,8 +10,7 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<HeaderCompoent />}>
           <Route index element={<HomePage />} />
-          <Route path="/japan" element={<JapanPage />} />
-          <Route path="/eng" element={<EngPage />} />
+          <Route path="/words" element={<WordsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

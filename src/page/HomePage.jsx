@@ -13,12 +13,9 @@ const HomePage = () => {
         backgroundColor: "white",
       }}
     >
-      <Title level={1}>너가 공부를 한다고???ㅋㅋㅋㅋ 풀어봐 그러면</Title>
+      <Title level={1}>열심히 공부를 해봅시다!!!!</Title>
       <Button type="primary" size="large" style={{ margin: "10px" }}>
-        <Link to="/japan">Japan Test</Link>
-      </Button>
-      <Button type="primary" size="large" style={{ margin: "10px" }}>
-        <Link to="/eng">Eng Test</Link>
+        <Link to="/words">words Test</Link>
       </Button>
     </div>
   );
