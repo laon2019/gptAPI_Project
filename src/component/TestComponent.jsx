@@ -39,15 +39,10 @@ const TestComponent = ({ data }) => {
     setLoading(true);
     const result = JSON.stringify(answers).replace(/"/g, "");
     const prompt = `
-      주어진 2차원 배열은 [단어, 뜻] 형식으로 구성되어 있습니다. 
-      예를 들어 [["apple", "사과"], ["banana", "바나나"]] 입니다.
-      0번째 요소는 단어, 1번째 요소는 사용자가 입력한 뜻입니다.
-      아래 배열을 확인하고, 단어와 뜻이 일치하는지 확인해 주세요:
-      ${result}
-      결과를 true와 false로만 구성된 1차원 배열로 반환해 주세요. 
-      예를 들어 [true, false, true]처럼 반환해 주세요. 
-      true는 사용자가 입력한 뜻이 정답임을, false는 오답임을 의미합니다.
-      사용자가 입력하지 않은 빈 칸은 무조건 false로 처리해 주세요.
+    ${result}
+    위에있는 2차원 배열에서 0번째는 단어이고 1번째는 뜻이야 맞았는지 틀렸는지 확인해줘
+    맞았는지 틀렸는지를 true false로 1차원 배열로 보내줘
+    예를 들어 [true, false, false, true] 이런식으로 보내줘 그리고 바로 내가 데이터를 사용할 수 있게 보내줘
     `;
     try {
       let chatResponse = await getChatGPTResponse(prompt);
