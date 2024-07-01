@@ -10,7 +10,7 @@ import {
   Space,
   Spin,
 } from "antd";
-import { getChatGPTResponse } from "../api/gpt";
+import { getChatGPT4Response } from "../api/gpt";
 
 const { Title } = Typography;
 
@@ -45,7 +45,7 @@ const TestComponent = ({ data }) => {
     예를 들어 [true, false, false, true] 이런식으로 보내줘 그리고 바로 내가 데이터를 사용할 수 있게 보내줘
     `;
     try {
-      let chatResponse = await getChatGPTResponse(prompt);
+      let chatResponse = await getChatGPT4Response(prompt);
 
       // Parse the response to remove the surrounding quotes and convert to an array
       const parsedResponse = JSON.parse(chatResponse.replace(/"/g, ""));
