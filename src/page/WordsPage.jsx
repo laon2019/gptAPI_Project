@@ -2,15 +2,18 @@ import React, { useEffect, useState } from "react";
 import { Layout, Typography, Button, Spin, Select } from "antd";
 import TestComponent from "../component/TestComponent";
 import { getChatGPTResponse } from "../api/gpt";
+import { useSpeechSynthesis } from "react-speech-kit";
 
 const { Title } = Typography;
 const { Content } = Layout;
 const { Option } = Select;
 
 const WordsPage = () => {
+  const { voices } = useSpeechSynthesis();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
   const [language, setLanguage] = useState("영어");
+  const [voice, setVoice] = useState(null);
 
   const handleClick = async () => {
     setLoading(true);
@@ -27,12 +30,10 @@ const WordsPage = () => {
     try {
       let chatResponse = await getChatGPTResponse(prompt);
 
-      // Check if chatResponse is a string and parse it
       if (typeof chatResponse === "string") {
         chatResponse = JSON.parse(chatResponse);
       }
 
-      // Validate that chatResponse is an array
       if (
         Array.isArray(chatResponse) &&
         chatResponse.every((item) => item.단어 && item.뜻)
@@ -43,7 +44,7 @@ const WordsPage = () => {
       }
     } catch (error) {
       console.error("Error fetching ChatGPT response:", error);
-      setData([]); // Set data to an empty array on error
+      setData([]);
     } finally {
       setLoading(false);
     }
@@ -51,7 +52,27 @@ const WordsPage = () => {
 
   const handleLanguageChange = (value) => {
     setLanguage(value);
+
+    const langCodeMap = {
+      영어: "en",
+      스페인어: "es",
+      일본어: "ja",
+      프랑스어: "fr",
+      베트남어: "vi",
+    };
+
+    const selectedVoice = voices.find((voice) =>
+      voice.lang.startsWith(langCodeMap[value])
+    );
+
+    setVoice(selectedVoice || voices[0]);
   };
+
+  useEffect(() => {
+    // 초기 로드 시 영어 목소리를 설정합니다.
+    const englishVoice = voices.find((voice) => voice.lang.startsWith("en"));
+    setVoice(englishVoice || voices[0]);
+  }, [voices]);
 
   useEffect(() => {
     console.log(data);
@@ -77,14 +98,18 @@ const WordsPage = () => {
             <Option value="프랑스어">프랑스어</Option>
             <Option value="베트남어">베트남어</Option>
           </Select>
-          <Button type="primary" onClick={handleClick} style={{ marginLeft: "10px" }}>
+          <Button
+            type="primary"
+            onClick={handleClick}
+            style={{ marginLeft: "10px" }}
+          >
             단어 가져오기
           </Button>
         </div>
         {loading ? (
           <Spin size="large" style={{ marginLeft: "10px" }} />
         ) : (
-          data && <TestComponent data={data} />
+          data && <TestComponent data={data} voice={voice} />
         )}
       </div>
     </Content>

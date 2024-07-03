@@ -11,10 +11,12 @@ import {
   Spin,
 } from "antd";
 import { getChatGPTResponse } from "../api/gpt";
+import { useSpeechSynthesis } from "react-speech-kit";
 
 const { Title } = Typography;
 
-const TestComponent = ({ data }) => {
+const TestComponent = ({ data, voice }) => {
+  const { speak } = useSpeechSynthesis();
   const [loading, setLoading] = useState(false);
   const [answers, setAnswers] = useState([]);
   const [results, setResults] = useState(null);
@@ -52,21 +54,19 @@ const TestComponent = ({ data }) => {
     try {
       let chatResponse = await getChatGPTResponse(prompt);
 
-      // Parse the response to remove the surrounding quotes and convert to an array
       const parsedResponse = JSON.parse(chatResponse.replace(/"/g, ""));
 
-      // Set the results state with the parsed response
       setResults(parsedResponse);
 
-      // Calculate and show the number of correct answers
       const correctAnswers = parsedResponse.filter((result) => result).length;
       message.info(`총 ${correctAnswers}개 맞았습니다.`);
     } catch (error) {
       console.error("Error fetching ChatGPT response:", error);
     } finally {
-      setLoading(false); // Ensure loading is set to false regardless of success or failure
+      setLoading(false);
     }
   };
+
   if (!Array.isArray(data)) {
     return <Alert message="데이터가 없습니다." type="warning" />;
   }
@@ -92,6 +92,9 @@ const TestComponent = ({ data }) => {
                   }}
                 >
                   <Space size="large">
+                    <Button onClick={() => speak({ text: word.단어, voice })}>
+                      <i className="ri-volume-up-fill"></i>
+                    </Button>
                     <span>{word.단어}</span>
                     <span>{word.뜻}</span>
                   </Space>
@@ -145,7 +148,7 @@ const TestComponent = ({ data }) => {
               type="primary"
               onClick={checkAnswers}
               style={{ marginTop: "20px" }}
-              disabled={loading} // Disable button while loading
+              disabled={loading}
             >
               정답 확인
             </Button>
