@@ -74,10 +74,6 @@ const WordsPage = () => {
     setVoice(englishVoice || voices[0]);
   }, [voices]);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   return (
     <Content
       style={{ padding: "0 50px", marginTop: 64, backgroundColor: "white" }}
