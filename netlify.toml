@@ -1,5 +1,2 @@
 [[redirects]]
-from = “/*”
-to = “/index.html”
-status = 200
 command = “REACT_APP_STAGE=dev CI='' npm run build”
